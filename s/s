@@ -8,11 +8,13 @@ if [[ $host =~ ^[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
     host=${default_prefix}.${host}
 elif [[ $host =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
     a=`echo $host | awk -F'.' '{print $1}'`
-    if [ "$a" == "16" -o "$a" == "17" ] ;then
-        host="172."$host
-    else 
+    if [ "$a" == "0" -o "$a" == "1" ] ;then
         host="10."$host
-    fi 
+    else
+        host="172."$host
+    fi
+elif [[ $host =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+    host=$host
 else
     host=`cat ~/.my_hosts | grep $host | head -1 | awk '{print $2}'`
     pass=`cat ~/.my_hosts | grep $host | head -1 | awk '{print $3}'`
@@ -21,7 +23,7 @@ else
         echo "===> Using password to login to host: ${host}"
         echo "===> cmd tool 'expect' is not usable. You need to type in password by your self."
         echo "===>  pswd: ${pass}"
-        ssh root@${host}  
+        ssh root@${host}
         exit 0
     fi
 fi
