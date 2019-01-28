@@ -1,0 +1,15 @@
+#! /usr/bin/expect
+
+set timeout 10
+set host_ip [ lindex $argv 0 ]
+set script [ lindex $argv 1 ]
+
+#spawn ssh $host_ip "rsync -a 188.100.26.77::scripts/$script /tmp/ && /bin/bash /tmp/$script && rm -f /tmp/$script"
+spawn ssh $host_ip "wget http://10.232.0.72/server_init/$script -O /tmp/$script && /bin/bash /tmp/$script && rm -f /tmp/$script"
+expect "password:";
+#send "Password123";
+#send "cobbler";
+send "1qaz@WSX"
+send "\r";
+send "\r";
+interact;
