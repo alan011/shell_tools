@@ -1,0 +1,12 @@
+- name: set k8s envvars
+  gather_facts: no
+  user: root
+  hosts: all
+  tasks:
+
+    - name: "run script"
+      script: /root/set_k8s_envvars/tmp/{{ remote_script }}
+      register: run_script
+
+    - debug: var=run_script.stdout_lines
+
